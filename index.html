@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kaushik Salla | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #7aa2f7;
+      --secondary-color: #c0caf5;
+      --text-color: #a9b1d6;
+      --bg-dark: #0a0a0f;
+      --card-bg: rgba(20, 20, 30, 0.9);
+      --chip-bg: rgba(40,40,60,0.9);
+      --border-color: #1a1a2e;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-dark);
+      color: #e0e0e0;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+      background-image: linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+                        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    a { color: var(--primary-color); text-decoration: none; }
+    h2 { color: var(--primary-color); margin-bottom: 1rem; }
+    h3 { color: var(--secondary-color); margin-top: 0; }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideIn {
+      from { transform: translateX(-50px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    .fade-in { animation: fadeIn 0.8s ease-out forwards; opacity: 0; }
+    .card.is-visible { animation-delay: var(--animation-delay, 0s); }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 2.5rem 1rem 1rem 1rem;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 3.5rem;
+      letter-spacing: 2px;
+      color: var(--secondary-color);
+      animation: slideIn 1s ease-out;
+    }
+    header p {
+      margin: 0.5rem 0;
+      font-size: 1.1rem;
+      color: var(--text-color);
+      animation: slideIn 1s ease-out 0.2s;
+      animation-fill-mode: both;
+    }
+
+    /* Sticky Nav */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,15,0.95);
+      backdrop-filter: blur(6px);
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 0.8rem;
+      border-bottom: 1px solid var(--border-color);
+      z-index: 1000;
+    }
+    nav a {
+      color: var(--text-color);
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    nav a.active { color: var(--primary-color); border-bottom: 2px solid var(--primary-color); }
+    nav a:hover { color: #bb9af7; }
+
+    /* Icon Bar */
+    .icon-bar {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 1.5rem 0;
+    }
+    .icon-bar a svg {
+      width: 26px;
+      height: 26px;
+      fill: var(--primary-color);
+      transition: 0.3s;
+    }
+    .icon-bar a:hover svg { fill: #bb9af7; }
+
+    /* Sections */
+    section {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 12px rgba(122,162,247,0.15);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 18px rgba(122,162,247,0.4);
+    }
+    .card p, .card li { color: var(--text-color); font-size: 0.95rem; }
+    ul { padding-left: 1.2rem; }
+
+    /* Skills and Coursework Chips */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .chip {
+      background: var(--chip-bg);
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--secondary-color);
+      box-shadow: 0 0 5px rgba(122,162,247,0.2);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.9rem;
+      color: #565f89;
+    }
+
+    @media(max-width: 600px) {
+      header h1 { font-size: 2rem; }
+      nav { flex-wrap: wrap; gap: 0.8rem; }
+      .icon-bar { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>KAUSHIK SALLA</h1>
+    <p>Electrical Engineering • VLSI Design Engineer • IIT Jodhpur</p>
+    <div class="icon-bar">
+      <a href="https://github.com/thekaushik-3011" target="_blank" title="GitHub">
+        <svg viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.6-3.9-1.6-.5-1.2-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.6 1.1 1.6 1.1 1 .1.7 2 .7 2 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.4-1.3-5.4-6 0-1.3.5-2.4 1.2-3.3-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.6 11.6 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.9 1.2 2 1.2 3.3 0 4.7-2.8 5.6-5.4 6 .4.3.7 1 .7 2v3c0 .3.2.7.8.6a11.5 11.5 0 0 0 7.9-10.9C23.5 5.65 18.35.5 12 .5z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/kaushik-salla-aabba4258/" target="_blank" title="LinkedIn">
+        <svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7h-3.6V9h3.5v1.6h.1c.5-1 1.8-2.1 3.7-2.1 3.9 0 4.6 2.6 4.6 5.9v6zM5.34 7.43a2.09 2.09 0 1 1 0-4.18 2.09 2.09 0 0 1 0 4.18zM7.14 20.45H3.54V9h3.6v11.45zM22.22 0H1.78C.8 0 0 .8 0 1.78v20.44C0 23.2.8 24 1.78 24h20.44C23.2 24 24 23.2 24 22.22V1.78C24 .8 23.2 0 22.22 0z"/></svg>
+      </a>
+      <a href="mailto:sallakaushik@gmail.com" title="Email">
+        <svg viewBox="0 0 24 24"><path d="M12 13.065 1.5 6.75v10.5h21V6.75L12 13.065zm0-2.13 10.5-6.185H1.5L12 10.935z"/></svg>
+      </a>
+      <a href="tel:+918780898610" title="Phone">
+        <svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.05 15.05 0 0 0 6.6 6.6l2.2-2.2c.3-.3.8-.4 1.2-.2 1.3.5 2.7.8 4.1.8.7 0 1.3.6 1.3 1.3V21c0 .7-.6 1.3-1.3 1.3C10.3 22.3 1.7 13.7 1.7 3.3 1.7 2.6 2.3 2 3 2h3.7c.7 0 1.3.6 1.3 1.3 0 1.4.3 2.8.8 4.1.1.4 0 .9-.3 1.2l-2.2 2.2z"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <nav>
+    <a href="#about">About</a>
+    <a href="#education">Education</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#coursework">Coursework</a>
+    <a href="#activities">Activities</a>
+  </nav>
+
+  <section id="about" class="fade-in">
+    <h2>About</h2>
+    <div class="card">
+      <p>I am a VLSI design engineer and Electrical Engineering student at IIT Jodhpur with expertise in analog and digital circuits, mixed-signal ASICs, FPGA systems, and processor architectures like RISC-V and ARM. I work on projects that combine hardware design with embedded software, and aim to build high-performance, secure, and energy-efficient systems for modern applications.</p>
+    </div>
+  </section>
+
+  <section id="education" class="fade-in">
+    <h2>Education</h2>
+    <div class="card"><h3>IIT Jodhpur</h3><p>B.Tech in Electrical Engineering - CGPA: 7.91/10<br><i>Nov 2022 – Present</i></p></div>
+    <div class="card"><h3>Kendriya Vidyalaya ONGC Chandkheda</h3><p>96.8% (School Topper)<br><i>2010 – 2022</i></p></div>
+  </section>
+
+  <section id="experience" class="fade-in">
+    <h2>Work Experience</h2>
+    <div class="card">
+      <h3>ISRO - Summer Intern</h3><p><i>May 2025 - Jul 2025</i></p>
+      <ul>
+        <li>Designed a 12-bit segmented DAC using cascode current mirrors and OPAMP feedback.</li>
+        <li>Targeted 500MSPS operation for SAR converters and remote sensing applications.</li>
+        <li>Achieved ~80dB SNR at low frequencies and ~60dB near Nyquist.</li>
+        <li>Validated through Cadence Virtuoso with Monte Carlo and corner analysis.</li>
+        <li><b>Skills Learned:</b> Cadence Virtuoso, Analog Circuit Design, DAC Architectures, Verilog-A, Testbench Writing, Mixed-
+Signal ASICs, IC Design, IP Design</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Vishv Inc. - Research Intern (LLM Inference on RISC-V)</h3><p><i>May 2025 – Aug 2025</i></p>
+      <ul>
+        <li>Implemented inference workflows for LLMs on multi-core RISC-V platforms.</li>
+        <li>Benchmarked OpenMP, MPI, pthreads achieving 3.4× speedup.</li>
+        <li>Analyzed compiler impact (GCC vs Clang) and scalability limits.</li>
+        <li>Contributed to ongoing research; <b>publication in progress</b>.</li>
+        <li><b>Skills Learned:</b> RISC-V, LLM Inference, Parallel Programming (OpenMP, MPI, pthreads), Performance Optimization</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="projects" class="fade-in">
+    <h2>Projects</h2>
+    <div class="card">
+    <h3>Bootloader Programming for STM32 Cortex-M4</h3>
+    <div style="margin-bottom: 0.6rem;">
+        <a href="https://github.com/thekaushik-3011/handwritten-digits" target="_blank" title="View source on GitHub" style="display: inline-flex; align-items: center; color: #7aa2f7; text-decoration: none;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="margin-right: 0.4rem;">
+            <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.6-3.9-1.6-.5-1.2-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.6 1.1 1.6 1.1 1 .1.7 2 .7 2 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.4-1.3-5.4-6 0-1.3.5-2.4 1.2-3.3-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.6 11.6 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.9 1.2 2 1.2 3.3 0 4.7-2.8 5.6-5.4 6 .4.3.7 1 .7 2v3c0 .3.2.7.8.6a11.5 11.5 0 0 0 7.9-10.9C23.5 5.65 18.35.5 12 .5z"/>
+        </svg>
+        GitHub
+        </a>
+    </div>
+    <p><i>Feb – Mar 2025</i></p>
+    <ul>
+        <li>Developed a reusable bootloader with system init and firmware loading.</li>
+        <li>Integrated MNIST digit recognition with 95% accuracy.</li>
+        <li>Optimized firmware loading to fit 64 KB flash.</li>
+        <li>Enabled application-independent execution on resource-constrained STM32 boards.</li>
+    </ul>
+    </div>
+    <div class="card">
+    <h3>Next-Word Prediction on STM32F429</h3>
+    <div style="margin-bottom: 0.6rem;">
+        <a href="https://github.com/thekaushik-3011/next_word_predictor" target="_blank" title="View source on GitHub" style="display: inline-flex; align-items: center; color: #7aa2f7; text-decoration: none;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="margin-right: 0.4rem;">
+            <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.6-3.9-1.6-.5-1.2-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.6 1.1 1.6 1.1 1 .1.7 2 .7 2 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.4-1.3-5.4-6 0-1.3.5-2.4 1.2-3.3-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.6 11.6 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.9 1.2 2 1.2 3.3 0 4.7-2.8 5.6-5.4 6 .4.3.7 1 .7 2v3c0 .3.2.7.8.6a11.5 11.5 0 0 0 7.9-10.9C23.5 5.65 18.35.5 12 .5z"/>
+        </svg>
+        GitHub
+        </a>
+    </div>
+    <p><i>Jan – Apr 2025</i></p>
+    <ul>
+        <li>Deployed Tiny Transformer for next-word prediction on STM32F429 Discovery.</li>
+        <li>Successfully implemented static fixed-point (Q15) model with ≤100 ms latency via UART.</li>
+        <!-- <li>Tested TFLite inference using STM32Cube.AI, with debugging of shape mismatch issues.</li> -->
+        <li>Enabled efficient edge deployment of lightweight NLP models on resource-constrained hardware.</li>
+    </ul>
+    </div>
+    <div class="card">
+    <h3>Logisim-Based MIPS Simulator</h3>
+    <p><i>Nov 2024 – Jan 2025</i></p>
+    <ul>
+        <li>Designed a MIPS processor simulator in Logisim with ALU, Control Unit, and Register File.</li>
+        <li>Implemented R-type, I-type, and J-type instructions.</li>
+        <li>Verified execution of arithmetic, logic, and branch operations.</li>
+        <li>Built modular components for extensibility in teaching and research.</li>
+    </ul>
+    </div>
+    <div class="card">
+    <h3>Voice-Controlled Home Automation System</h3>
+    <div style="margin-bottom: 0.6rem;">
+        <a href="https://github.com/thekaushik-3011/home-automation" target="_blank" title="View source on GitHub" style="display: inline-flex; align-items: center; color: #7aa2f7; text-decoration: none;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="margin-right: 0.4rem;">
+            <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.6-3.9-1.6-.5-1.2-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.6 1.1 1.6 1.1 1 .1.7 2 .7 2 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.4-1.3-5.4-6 0-1.3.5-2.4 1.2-3.3-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.6 11.6 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.9 1.2 2 1.2 3.3 0 4.7-2.8 5.6-5.4 6 .4.3.7 1 .7 2v3c0 .3.2.7.8.6a11.5 11.5 0 0 0 7.9-10.9C23.5 5.65 18.35.5 12 .5z"/>
+        </svg>
+        GitHub
+        </a>
+    </div>
+    <p><i>Mar – May 2024</i></p>
+    <ul>
+        <li>Built Google Assistant-based automation system with &lt;500 ms latency.</li>
+        <li>Used ESP8266/ESP32 + relays for appliance control.</li>
+        <li>Integrated MQTT for real-time IoT communication.</li>
+    </ul>
+    </div>
+    <div class="card">
+    <h3>FPGA Based Digital Clock</h3>
+    <div style="margin-bottom: 0.6rem;">
+        <a href="https://github.com/thekaushik-3011/DigitalClock" target="_blank" title="View source on GitHub" style="display: inline-flex; align-items: center; color: #7aa2f7; text-decoration: none;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="margin-right: 0.4rem;">
+            <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.6-3.9-1.6-.5-1.2-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.6 1.1 1.6 1.1 1 .1.7 2 .7 2 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.4-1.3-5.4-6 0-1.3.5-2.4 1.2-3.3-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.6 11.6 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.9 1.2 2 1.2 3.3 0 4.7-2.8 5.6-5.4 6 .4.3.7 1 .7 2v3c0 .3.2.7.8.6a11.5 11.5 0 0 0 7.9-10.9C23.5 5.65 18.35.5 12 .5z"/>
+        </svg>
+        GitHub
+        </a>
+    </div>
+    <p><i>Mar – Apr 2024</i></p>
+    <ul>
+        <li>Built a real-time digital clock with alarm, timer, and stopwatch at 50 MHz.</li>
+        <li>72-hour test run verified low-latency, efficient design.</li>
+        <li>Built 4-digit LED UI with debounced inputs (&lt;10 ms latency).</li>
+    </ul>
+    </div>
+  </section>
+
+  <section id="skills" class="fade-in">
+    <h2>Technical Skills</h2>
+
+    <div class="card">
+        <h3>Programming Languages</h3>
+        <div class="chips">
+        <span class="chip">Python</span>
+        <span class="chip">C</span>
+        <span class="chip">C++</span>
+        <span class="chip">Verilog</span>
+        <span class="chip">SystemVerilog</span>
+        <span class="chip">Bash Scripting</span>
+        <span class="chip">Embedded C</span>
+        <span class="chip">ARM Assembly</span>
+        <span class="chip">MIPS Assembly</span>
+        <span class="chip">x86 Assembly</span>
+        <span class="chip">SystemC</span>
+        <span class="chip">Rust</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Software & Networking</h3>
+        <div class="chips">
+        <span class="chip">Cadence Virtuoso</span>
+        <span class="chip">LTspice</span>
+        <span class="chip">MATLAB</span>
+        <span class="chip">Simulink</span>
+        <span class="chip">Logisim</span>
+        <span class="chip">Verilator</span>
+        <span class="chip">QEMU</span>
+        <span class="chip">STM32CubeIDE</span>
+        <span class="chip">Keil</span>
+        <span class="chip">Device Drivers</span>
+        <span class="chip">TCP/IP</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Core Competencies</h3>
+        <div class="chips">
+        <span class="chip">Linux</span>
+        <span class="chip">Git</span>
+        <span class="chip">RISC-V</span>
+        <span class="chip">Static Timing Analysis (STA)</span>
+        <span class="chip">Scripting</span>
+        <span class="chip">FPGA</span>
+        <span class="chip">Embedded Systems</span>
+        <span class="chip">IoT</span>
+        <span class="chip">Machine Learning</span>
+        <span class="chip">Deep Learning</span>
+        <span class="chip">Neural Networks</span>
+        </div>
+    </div>
+    </section>
+
+  <section id="coursework" class="fade-in">
+    <h2>Relevant Coursework</h2>
+    <div class="card">
+        <div class="chips">
+        <span class="chip">Computer Architecture</span>
+        <span class="chip">Embedded Systems</span>
+        <span class="chip">VLSI Design</span>
+        <span class="chip">Digital Signal Processing (DSP)</span>
+        <span class="chip">Data Structures and Algorithms</span>
+        <span class="chip">Analog Circuits</span>
+        <span class="chip">Digital Electronics</span>
+        <span class="chip">Signals and Systems</span>
+        <span class="chip">Control Systems</span>
+        <span class="chip">Probability & Statistics</span>
+        <span class="chip">Pattern Recognition</span>
+        </div>
+    </div>
+    </section>
+
+  <section id="activities" class="fade-in">
+    <h2>Extra Curricular Activities</h2>
+    <div class="card">
+        <ul>
+        <li>Coordinator, <b>Nexus</b> - Astronomy and SpaceTech Club, IIT Jodhpur</li>
+        <li>Core Team Member, <b>Ateliers</b> - Art Society of IIT Jodhpur</li>
+        <li>Support Team Member - <b>ISRO IRoC-24 Rover Project</b></li>
+        </ul>
+    </div>
+    </section>
+
+  <footer>© 2025 Kaushik Salla | Evolving Every Clock Cycle</footer>
+
+  <script>
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll("nav a");
+    const cards = document.querySelectorAll(".card");
+
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute("id");
+          navLinks.forEach(link => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === "#" + id) {
+              link.classList.add("active");
+            }
+          });
+        }
+      });
+    }, { rootMargin: "-50% 0px -50% 0px" });
+
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          cardObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.25 });
+
+    sections.forEach(section => navObserver.observe(section));
+    cards.forEach(card => cardObserver.observe(card));
+
+  </script>
+</body>
+</html>
