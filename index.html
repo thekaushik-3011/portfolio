@@ -53,6 +53,7 @@
     header {
       text-align: center;
       padding: 2.5rem 1rem 1rem 1rem;
+      position: relative;
     }
     header h1 {
       margin: 0;
@@ -69,26 +70,98 @@
       animation-fill-mode: both;
     }
 
-    /* Sticky Nav */
-    nav {
-      position: sticky;
-      top: 0;
-      background: rgba(10,10,15,0.95);
-      backdrop-filter: blur(6px);
+    /* Hamburger Menu */
+    .menu-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1001;
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
       display: flex;
+      flex-direction: column;
       justify-content: center;
-      gap: 1.5rem;
-      padding: 0.8rem;
-      border-bottom: 1px solid var(--border-color);
-      z-index: 1000;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.3s ease;
     }
-    nav a {
+    .menu-toggle:hover {
+      background: rgba(122,162,247,0.1);
+      border-color: var(--primary-color);
+    }
+    .menu-toggle span {
+      width: 24px;
+      height: 3px;
+      background: var(--primary-color);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px);
+    }
+
+    /* Side Navigation */
+    .side-nav {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100vh;
+      background: rgba(10,10,15,0.98);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      transition: right 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      padding-top: 80px;
+      box-shadow: -5px 0 20px rgba(0,0,0,0.5);
+    }
+    .side-nav.active {
+      right: 0;
+    }
+    .side-nav a {
       color: var(--text-color);
       font-weight: 500;
-      transition: 0.3s;
+      padding: 15px 30px;
+      border-bottom: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.9rem;
     }
-    nav a.active { color: var(--primary-color); border-bottom: 2px solid var(--primary-color); }
-    nav a:hover { color: #bb9af7; }
+    .side-nav a:hover, .side-nav a.active {
+      color: var(--primary-color);
+      background: rgba(122,162,247,0.1);
+      padding-left: 40px;
+    }
+
+    /* Overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
 
     /* Icon Bar */
     .icon-bar {
@@ -104,6 +177,31 @@
       transition: 0.3s;
     }
     .icon-bar a:hover svg { fill: #bb9af7; }
+
+    /* CV Button */
+    .cv-button {
+      display: inline-flex;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(122,162,247,0.8), rgba(187,154,247,0.8));
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      margin: 20px 0;
+      box-shadow: 0 4px 15px rgba(122,162,247,0.2);
+    }
+    .cv-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(122,162,247,0.3);
+      color: white;
+    }
+    .cv-button svg {
+      margin-right: 8px;
+      width: 20px;
+      height: 20px;
+    }
 
     /* Sections */
     section {
@@ -144,19 +242,72 @@
     /* Footer */
     footer {
       text-align: center;
-      padding: 1.5rem;
+      padding: 2rem 1rem;
       font-size: 0.9rem;
       color: #565f89;
+      border-top: 1px solid var(--border-color);
+      margin-top: 3rem;
+    }
+    .footer-contact {
+      margin: 1rem 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+    .footer-contact a {
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.3s ease;
+    }
+    .footer-contact a:hover {
+      color: #bb9af7;
+    }
+    .footer-contact svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
     }
 
     @media(max-width: 600px) {
       header h1 { font-size: 2rem; }
-      nav { flex-wrap: wrap; gap: 0.8rem; }
       .icon-bar { gap: 1rem; }
+      .side-nav {
+        width: 250px;
+        right: -250px;
+      }
+      .footer-contact {
+        flex-direction: column;
+        gap: 1rem;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Hamburger Menu -->
+  <div class="menu-toggle" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay" onclick="closeMenu()"></div>
+
+  <!-- Side Navigation -->
+  <nav class="side-nav">
+    <a href="#" onclick="closeMenu(); window.scrollTo({top: 0, behavior: 'smooth'})">Home</a>
+    <a href="#about" onclick="closeMenu()">About</a>
+    <a href="#education" onclick="closeMenu()">Education</a>
+    <a href="#experience" onclick="closeMenu()">Experience</a>
+    <a href="#projects" onclick="closeMenu()">Projects</a>
+    <a href="#skills" onclick="closeMenu()">Skills</a>
+    <a href="#coursework" onclick="closeMenu()">Coursework</a>
+    <a href="#activities" onclick="closeMenu()">Activities</a>
+  </nav>
+
   <header>
     <h1 style="font-size: 4.25rem; line-height: 1.1; 
              background: linear-gradient(90deg, #7aa2f7, #bb9af7);
@@ -164,6 +315,7 @@
              -webkit-text-fill-color: transparent;
              font-weight: 800;">KAUSHIK SALLA</h1>
     <p style="font-size: 1rem; color: #c0caf5;">Electrical Engineering • VLSI Design Engineer • IIT Jodhpur</p>
+    
     <div class="icon-bar">
       <a href="https://github.com/thekaushik-3011" target="_blank" title="GitHub">
         <svg viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.6-3.9-1.6-.5-1.2-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.6 1.1 1.6 1.1 1 .1.7 2 .7 2 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.4-1.3-5.4-6 0-1.3.5-2.4 1.2-3.3-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.6 11.6 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.9 1.2 2 1.2 3.3 0 4.7-2.8 5.6-5.4 6 .4.3.7 1 .7 2v3c0 .3.2.7.8.6a11.5 11.5 0 0 0 7.9-10.9C23.5 5.65 18.35.5 12 .5z"/></svg>
@@ -178,17 +330,15 @@
         <svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.05 15.05 0 0 0 6.6 6.6l2.2-2.2c.3-.3.8-.4 1.2-.2 1.3.5 2.7.8 4.1.8.7 0 1.3.6 1.3 1.3V21c0 .7-.6 1.3-1.3 1.3C10.3 22.3 1.7 13.7 1.7 3.3 1.7 2.6 2.3 2 3 2h3.7c.7 0 1.3.6 1.3 1.3 0 1.4.3 2.8.8 4.1.1.4 0 .9-.3 1.2l-2.2 2.2z"/></svg>
       </a>
     </div>
-  </header>
 
-  <nav>
-    <a href="#about">About</a>
-    <a href="#education">Education</a>
-    <a href="#experience">Experience</a>
-    <a href="#projects">Projects</a>
-    <a href="#skills">Skills</a>
-    <a href="#coursework">Coursework</a>
-    <a href="#activities">Activities</a>
-  </nav>
+    <!-- CV Download Button -->
+    <a href="https://drive.google.com/file/d/1Q3jXw9kWbKIWRIjtBmrCzXU9qjXr_wEM/view?usp=drive_link" class="cv-button" title="Download CV">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+      </svg>
+      Download CV
+    </a>
+  </header>
 
   <section id="about" class="fade-in">
     <h2>About</h2>
@@ -262,7 +412,6 @@ Signal ASICs, IC Design, IP Design</li>
     <ul>
         <li>Deployed Tiny Transformer for next-word prediction on STM32F429 Discovery.</li>
         <li>Successfully implemented static fixed-point (Q15) model with ≤100 ms latency via UART.</li>
-        <!-- <li>Tested TFLite inference using STM32Cube.AI, with debugging of shape mismatch issues.</li> -->
         <li>Enabled efficient edge deployment of lightweight NLP models on resource-constrained hardware.</li>
     </ul>
     </div>
@@ -398,12 +547,45 @@ Signal ASICs, IC Design, IP Design</li>
     </div>
     </section>
 
-  <footer>© 2025 Kaushik Salla | Evolving Every Clock Cycle</footer>
+  <footer>
+    <p>© 2025 Kaushik Salla | Evolving Every Clock Cycle</p>
+    <div class="footer-contact">
+      <a href="mailto:sallakaushik@gmail.com">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 13.065 1.5 6.75v10.5h21V6.75L12 13.065zm0-2.13 10.5-6.185H1.5L12 10.935z"/>
+        </svg>
+        sallakaushik@gmail.com
+      </a>
+      <a href="tel:+918780898610">
+        <svg viewBox="0 0 24 24">
+          <path d="M6.6 10.8a15.05 15.05 0 0 0 6.6 6.6l2.2-2.2c.3-.3.8-.4 1.2-.2 1.3.5 2.7.8 4.1.8.7 0 1.3.6 1.3 1.3V21c0 .7-.6 1.3-1.3 1.3C10.3 22.3 1.7 13.7 1.7 3.3 1.7 2.6 2.3 2 3 2h3.7c.7 0 1.3.6 1.3 1.3 0 1.4.3 2.8.8 4.1.1.4 0 .9-.3 1.2l-2.2 2.2z"/>
+        </svg>
+        +91 87808 98610
+      </a>
+    </div>
+  </footer>
 
   <script>
     const sections = document.querySelectorAll("section");
-    const navLinks = document.querySelectorAll("nav a");
+    const navLinks = document.querySelectorAll(".side-nav a");
     const cards = document.querySelectorAll(".card");
+    const menuToggle = document.querySelector('.menu-toggle');
+    const sideNav = document.querySelector('.side-nav');
+    const overlay = document.querySelector('.overlay');
+
+    function toggleMenu() {
+      menuToggle.classList.toggle('active');
+      sideNav.classList.toggle('active');
+      overlay.classList.toggle('active');
+      document.body.style.overflow = sideNav.classList.contains('active') ? 'hidden' : 'auto';
+    }
+
+    function closeMenu() {
+      menuToggle.classList.remove('active');
+      sideNav.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
 
     const navObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -431,6 +613,17 @@ Signal ASICs, IC Design, IP Design</li>
     sections.forEach(section => navObserver.observe(section));
     cards.forEach(card => cardObserver.observe(card));
 
+    // Smooth scroll for navigation links
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+          targetSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
   </script>
 </body>
 </html>
