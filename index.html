@@ -70,8 +70,62 @@
       animation-fill-mode: both;
     }
 
-    /* Hamburger Menu */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(10,10,15,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0 2rem;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+    }
+
+    .nav-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--text-color);
+      font-weight: 500;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--primary-color);
+      background: rgba(122,162,247,0.1);
+    }
+
     .menu-toggle {
+      display: none;
       position: fixed;
       top: 20px;
       right: 20px;
@@ -82,32 +136,37 @@
       width: 50px;
       height: 50px;
       cursor: pointer;
-      display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       gap: 4px;
       transition: all 0.3s ease;
     }
+
     .menu-toggle:hover {
       background: rgba(122,162,247,0.1);
       border-color: var(--primary-color);
     }
+
     .menu-toggle span {
       width: 24px;
       height: 3px;
       background: var(--primary-color);
       border-radius: 2px;
       transition: all 0.3s ease;
+      display: block;
     }
+
     .menu-toggle.active span:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
+      transform: rotate(45deg) translate(6px, 6px);
     }
+
     .menu-toggle.active span:nth-child(2) {
       opacity: 0;
     }
+
     .menu-toggle.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -6px);
+      transform: rotate(-45deg) translate(6px, -6px);
     }
 
     /* Side Navigation */
@@ -121,7 +180,7 @@
       backdrop-filter: blur(10px);
       z-index: 1000;
       transition: right 0.3s ease;
-      display: flex;
+      display: none;
       flex-direction: column;
       padding-top: 80px;
       box-shadow: -5px 0 20px rgba(0,0,0,0.5);
@@ -271,43 +330,117 @@
       fill: currentColor;
     }
 
-    @media(max-width: 600px) {
-      header h1 { font-size: 2rem; }
-      .icon-bar { gap: 1rem; }
+    /* Media Queries */
+    @media(max-width: 768px) {
+      .navbar {
+        padding: 0 1rem;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
       .menu-toggle {
-        width: 36px;
-        height: 32px;
+        display: flex;
+      }
+      
+      .side-nav {
+        display: flex;
+      }
+      
+      .side-nav.active {
+        right: 0;
+      }
+      
+      header {
+        margin-top: 80px;
+      }
+    }
+
+    @media(max-width: 600px) {
+      header h1 { 
+        font-size: 2rem; 
+      }
+      
+      .icon-bar { 
+        gap: 1rem; 
+      }
+      
+      .menu-toggle {
+        width: 40px;
+        height: 40px;
         top: 15px;
         right: 15px;
         gap: 3px;
       }
+      
       .menu-toggle span {
-        width: 16px;
+        width: 18px;
         height: 2px;
       }
+      
+      .menu-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(4px, 4px);
+      }
+
+      .menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(4px, -4px);
+      }
+      
       .side-nav {
         width: 250px;
         right: -250px;
       }
+      
       .footer-contact {
         flex-direction: column;
         gap: 1rem;
       }
     }
+
+    @media(min-width: 769px) {
+      .side-nav {
+        display: none !important;
+      }
+      
+      .overlay {
+        display: none !important;
+      }
+      
+      header {
+        margin-top: 80px;
+      }
+    }
   </style>
 </head>
 <body>
-  <!-- Hamburger Menu -->
-  <div class="menu-toggle" onclick="toggleMenu()">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">KS</a>
+      
+      <!-- Desktop Navigation -->
+      <ul class="nav-links">
+        <li><a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#coursework">Coursework</a></li>
+        <li><a href="#activities">Activities</a></li>
+      </ul>
+      
+      <!-- Mobile Hamburger Menu -->
+      <div class="menu-toggle" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
 
-  <!-- Overlay -->
   <div class="overlay" onclick="closeMenu()"></div>
 
-  <!-- Side Navigation -->
   <nav class="side-nav">
     <a href="#" onclick="closeMenu(); window.scrollTo({top: 0, behavior: 'smooth'})">Home</a>
     <a href="#about" onclick="closeMenu()">About</a>
@@ -583,6 +716,7 @@ Signal ASICs, IC Design, IP Design</li>
     const menuToggle = document.querySelector('.menu-toggle');
     const sideNav = document.querySelector('.side-nav');
     const overlay = document.querySelector('.overlay');
+    const desktopNavLinks = document.querySelectorAll(".nav-links a");
 
     function toggleMenu() {
       menuToggle.classList.toggle('active');
@@ -602,7 +736,7 @@ Signal ASICs, IC Design, IP Design</li>
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const id = entry.target.getAttribute("id");
-          navLinks.forEach(link => {
+          [...navLinks, ...desktopNavLinks].forEach(link => {
             link.classList.remove("active");
             if (link.getAttribute("href") === "#" + id) {
               link.classList.add("active");
@@ -611,6 +745,22 @@ Signal ASICs, IC Design, IP Design</li>
         }
       });
     }, { rootMargin: "-50% 0px -50% 0px" });
+
+    desktopNavLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const href = link.getAttribute('href');
+        if (href === '#') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          const targetId = href.substring(1);
+          const targetSection = document.getElementById(targetId);
+          if (targetSection) {
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    });
 
     const cardObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -624,7 +774,6 @@ Signal ASICs, IC Design, IP Design</li>
     sections.forEach(section => navObserver.observe(section));
     cards.forEach(card => cardObserver.observe(card));
 
-    // Smooth scroll for navigation links
     navLinks.forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
